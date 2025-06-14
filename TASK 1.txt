@@ -1,0 +1,84 @@
+import java.util.*;
+
+class Student {
+    private String name;
+    private int rollNumber;
+    private ArrayList<Integer> marks;
+
+    public Student(String name, int rollNumber) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.marks = new ArrayList<>();
+    }
+
+    public void addMark(int mark) {
+        marks.add(mark);
+    }
+
+    public double getAverage() {
+        int sum = 0;
+        for (int mark : marks) {
+            sum += mark;
+        }
+        return marks.size() > 0 ? (double) sum / marks.size() : 0;
+    }
+
+    public int getHighest() {
+        return Collections.max(marks);
+    }
+
+    public int getLowest() {
+        return Collections.min(marks);
+    }
+
+    public void displaySummary() {
+        System.out.println("Name: " + name);
+        System.out.println("Roll No: " + rollNumber);
+        System.out.println("Marks: " + marks);
+        System.out.printf("Average: %.2f\n", getAverage());
+        System.out.println("Highest Score: " + getHighest());
+        System.out.println("Lowest Score: " + getLowest());
+        System.out.println("-----------------------------------");
+    }
+}
+
+public class StudentGradeManager {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> studentList = new ArrayList<>();
+
+        System.out.print("Enter number of students: ");
+        int studentCount = sc.nextInt();
+
+        for (int i = 0; i < studentCount; i++) {
+            System.out.println("\nEnter details for Student " + (i + 1) + ":");
+            sc.nextLine(); // consume newline
+            System.out.print("Name: ");
+            String name = sc.nextLine();
+
+            System.out.print("Roll Number: ");
+            int rollNumber = sc.nextInt();
+
+            Student student = new Student(name, rollNumber);
+
+            System.out.print("Enter number of subjects: ");
+            int subjectCount = sc.nextInt();
+
+            for (int j = 0; j < subjectCount; j++) {
+                System.out.print("Enter marks for Subject " + (j + 1) + ": ");
+                int mark = sc.nextInt();
+                student.addMark(mark);
+            }
+
+            studentList.add(student);
+        }
+
+        // Display summary report
+        System.out.println("\n=========== Summary Report ===========");
+        for (Student student : studentList) {
+            student.displaySummary();
+        }
+
+        sc.close();
+    }
+}
